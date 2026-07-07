@@ -61,12 +61,11 @@ import streamlit as st
 
 st.set_page_config(
     page_title="EduChat",
-    #page_icon="🤖",
     page_icon="assets/eve.png",
     layout="wide"
 )
 
-st.title("🤖 EduChat")
+st.title("page_icon + EduChat")
 
 st.subheader("Your Educational AI Assistant")
 
