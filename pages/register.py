@@ -2,7 +2,7 @@ import sqlite3
 import streamlit as st
 
 # Connect to database
-conn = sqlite3.connect("educhat.db")
+conn = sqlite3.connect("database/educhat.db")
 cursor = conn.cursor()
 
 # Create table if it doesn't exist
