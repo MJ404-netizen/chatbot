@@ -65,7 +65,14 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title(page_icon + "EduChat")
+# Load the image
+col1, col2 = st.columns([1, 10])  # Create columns for image and title
+with col1:
+    eve_image = Image.open("assets/eve.png")
+    st.image(eve_image, width=50)  # Adjust width as needed
+    
+with col2:
+    st.title("EduChat")
 
 st.subheader("Your Educational AI Assistant")
 
