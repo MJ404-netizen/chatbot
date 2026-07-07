@@ -46,3 +46,10 @@ if submit:
 
         except sqlite3.IntegrityError:
             st.error("Username or email already exists.")
+
+st.subheader("Registered Users")
+
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()
+
+st.write(rows)
