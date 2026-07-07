@@ -58,6 +58,7 @@
 
 
 import streamlit as st
+import base64
 from PIL import Image
 
 st.set_page_config(
@@ -66,14 +67,20 @@ st.set_page_config(
     layout="wide"
 )
 
-# Load the image
-col1, col2 = st.columns([1, 10])  # Create columns for image and title
-with col1:
-    eve_image = Image.open("assets/eve.png")
-    st.image(eve_image, width=50)  # Adjust width as needed
-    
-with col2:
-    st.title("EduChat")
+# Load and encode image
+with open("assets/eve.png", "rb") as img_file:
+    img_data = base64.b64encode(img_file.read()).decode()
+
+# Display title with inline image using HTML
+st.markdown(
+    f"""
+    <h1 style='display: flex; align-items: center;'>
+        <img src='data:image/png;base64,{img_data}' style='width: 50px; height: 50px; margin-right: 10px;'>
+        EduChat
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 
 st.subheader("Your Educational AI Assistant")
 
