@@ -65,7 +65,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("page_icon + EduChat")
+st.title(page_icon + "EduChat")
 
 st.subheader("Your Educational AI Assistant")
 
