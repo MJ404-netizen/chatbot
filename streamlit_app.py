@@ -75,7 +75,7 @@ with open("assets/eve.png", "rb") as img_file:
 st.markdown(
     f"""
     <h1 style='display: flex; align-items: center;'>
-        <img src='data:image/png;base64,{img_data}' style='width: 100px; height: 100px; margin-right: 10px;'>
+        <img src='data:image/png;base64,{img_data}' style='width: 120px; height: 120px; margin-right: 10px;'>
         EduChat
     </h1>
     """,
