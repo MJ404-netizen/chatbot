@@ -57,6 +57,52 @@
 
 
 
+# import streamlit as st
+# import base64
+# from PIL import Image
+
+# st.set_page_config(
+#     page_title="EduChat",
+#     page_icon="assets/eve.png",
+#     layout="wide"
+# )
+
+# # Load and encode image
+# with open("assets/eve.png", "rb") as img_file:
+#     img_data = base64.b64encode(img_file.read()).decode()
+
+# # Display title with inline image using HTML
+# st.markdown(
+#     f"""
+#     <h1 style='display: flex; align-items: center;'>
+#         <img src='data:image/png;base64,{img_data}' style='width: 120px; height: 120px; margin-right: 10px;'>
+#         EduChat
+#     </h1>
+#     """,
+#     unsafe_allow_html=True
+# )
+
+# st.subheader("Your Educational AI Assistant")
+
+# st.write("""
+# Learn smarter with AI.
+
+# • Ask educational questions
+# • Get instant explanations
+# • Improve your learning experience
+# """)
+
+# col1, col2 = st.columns(2)
+
+# with col1:
+#     if st.button("🔐 Login", use_container_width=True):
+#         st.switch_page("pages/login.py")
+
+# with col2:
+#     if st.button("📝 Register", use_container_width=True):
+#         st.switch_page("pages/register.py")
+
+
 import streamlit as st
 import base64
 from PIL import Image
@@ -64,40 +110,86 @@ from PIL import Image
 st.set_page_config(
     page_title="EduChat",
     page_icon="assets/eve.png",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"  # Hide sidebar
 )
 
-# Load and encode image
-with open("assets/eve.png", "rb") as img_file:
-    img_data = base64.b64encode(img_file.read()).decode()
+# Check if user is logged in
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
 
-# Display title with inline image using HTML
-st.markdown(
-    f"""
-    <h1 style='display: flex; align-items: center;'>
-        <img src='data:image/png;base64,{img_data}' style='width: 120px; height: 120px; margin-right: 10px;'>
-        EduChat
-    </h1>
-    """,
-    unsafe_allow_html=True
-)
+if st.session_state.logged_in:
+    # Show main app with sidebar navigation
+    # Load and encode image
+    with open("assets/eve.png", "rb") as img_file:
+        img_data = base64.b64encode(img_file.read()).decode()
 
-st.subheader("Your Educational AI Assistant")
+    # Display title with inline image using HTML
+    st.markdown(
+        f"""
+        <h1 style='display: flex; align-items: center;'>
+            <img src='data:image/png;base64,{img_data}' style='width: 120px; height: 120px; margin-right: 10px;'>
+            EduChat
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
+    st.write(f"Welcome back, {st.session_state.username}!")
+    
+    with st.sidebar:
+        st.image("assets/eve.png", width=100)
+        st.write(f"👋 {st.session_state.username}")
+        if st.button("🚪 Sign Out", use_container_width=True):
+            st.session_state.logged_in = False
+            st.session_state.username = None
+            st.rerun()
+    
+    # Your main content here
+    st.subheader("Your Educational AI Assistant")
+    st.write("""
+    Learn smarter with AI.
+    • Ask educational questions
+    • Get instant explanations
+    • Improve your learning experience
+    """)
+    
+else:
+    # Show login/register page
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        # Load and encode image
+        with open("assets/eve.png", "rb") as img_file:
+            img_data = base64.b64encode(img_file.read()).decode()
 
-st.write("""
-Learn smarter with AI.
-
-• Ask educational questions
-• Get instant explanations
-• Improve your learning experience
-""")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("🔐 Login", use_container_width=True):
-        st.switch_page("pages/login.py")
-
-with col2:
-    if st.button("📝 Register", use_container_width=True):
-        st.switch_page("pages/register.py")
+        # Display title with inline image using HTML
+        st.markdown(
+            f"""
+            <h1 style='display: flex; align-items: center;'>
+                <img src='data:image/png;base64,{img_data}' style='width: 120px; height: 120px; margin-right: 10px;'>
+                EduChat
+            </h1>
+            """,
+            unsafe_allow_html=True
+        )
+        st.subheader("Welcome! Please sign in")
+        
+        # Login Form
+        with st.form("login_form"):
+            username = st.text_input("Username")
+            password = st.text_input("Password", type="password")
+            submitted = st.form_submit_button("🔐 Sign In", use_container_width=True)
+            
+            if submitted:
+                # Add your authentication logic here
+                # Example:
+                if username and password:  # Replace with actual DB check
+                    st.session_state.logged_in = True
+                    st.session_state.username = username
+                    st.rerun()
+                else:
+                    st.error("Invalid credentials")
+        
+        # Register link
+        st.write("Don't have an account?")
+        if st.button("📝 Create Account", use_container_width=True):
+            st.switch_page("pages/register.py")
